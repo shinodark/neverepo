@@ -29,8 +29,8 @@ class FileManager {
     private $filename;
     private $handle;
 
-    function __construct($filename = "") {
-        $this->filename = ROOT_PATH . $filename;
+    function __construct($filename) {
+        $this->filename = $filename;
     }
 
     /**
@@ -152,7 +152,7 @@ class FileManager {
         $f = 0;
         $f_arr = array();
         $d_arr = array();
-        
+
         if ($dirhandle = @opendir($dir)) {
             while (false !== ($file = @readdir($dirhandle))) {
                 if (is_file($dir . "/" . $file)) {

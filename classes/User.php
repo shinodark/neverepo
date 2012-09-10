@@ -24,14 +24,15 @@
  */
 
 /**
- * Description of Level
+ * Description of User
  *
  * @author shino
  */
-class Level {
-    private $id = -1;
-    private $author = "";
-    private $preview = "";
+class User {
+    private $id;
+    private $name;
+    private $mail;
+    private $password;
     private $timestamp;
     
     public function getId() {
@@ -42,22 +43,30 @@ class Level {
         $this->id = $id;
     }
 
-    public function getAuthor() {
-        return $this->author;
+    public function getName() {
+        return $this->name;
     }
 
-    public function setAuthor($author) {
-        $this->author = $author;
+    public function setName($name) {
+        $this->name = $name;
     }
 
-    public function getPreview() {
-        return $this->preview;
+    public function getMail() {
+        return $this->mail;
     }
 
-    public function setPreview($preview) {
-        $this->preview = $preview;
+    public function setMail($mail) {
+        $this->mail = $mail;
     }
-    
+
+    public function getPassword() {
+        return $this->password;
+    }
+
+    public function setPassword($password) {
+        $this->password = $password;
+    }
+
     public function getTimestamp() {
         return $this->timestamp;
     }
@@ -66,13 +75,7 @@ class Level {
         $this->timestamp = $timestamp;
     }
 
-    
-    public function Insert() {
-        $db = DatabaseManager::getDB();
-        $query = 'INSERT into level (author,preview) VALUES("'.$this->author.'","'.$this->preview.'")';
-        $db->query($query);
-        $this->setId($db->lastInsertId());
-    }
+
 }
 
 ?>
