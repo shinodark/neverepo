@@ -44,6 +44,19 @@ class ConfigManager {
     public static function getProperty($property) {
         return self::$config[$property];
     }
+    
+    public static function loadConfigFile($path) {
+        $arr = parse_ini_file($path, true);
+        
+        if ($arr === FALSE) {
+            throw new NeverepoRessourceException ("Can't load configuration file.");
+        }
+        if (!array_key_exists('Database', $arr)) {
+            throw new NeverepoRessourceException ("Invalid config file, missing Database section.");
+        }
+        foreach ($arr["Database"] as $key => $value)
+            self::setProperty("database_".$key, $value);
+    }
 }
 
 ?>

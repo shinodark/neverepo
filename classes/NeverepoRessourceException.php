@@ -23,9 +23,13 @@
   # ***** END LICENSE BLOCK *****
  */
 
-include_once "classes/NeverepoModelException.php";
-include_once "classes/NeverepoRessourceException.php";
-include_once "classes/Level.php";
-include_once "classes/Set.php";
-include_once "classes/User.php";
+/**
+ * Description of NeverepoModelException
+ *
+ * @author shino
+ */
+class NeverepoRessourceException extends Exception {
+
+}
+
 ?>
