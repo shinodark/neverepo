@@ -28,50 +28,67 @@
  *
  * @author shino
  */
+include "Connection.php";
 class Level {
-    private $id = -1;
-    private $author = "";
-    private $preview = "";
-    private $timestamp;
+     private $id = -1;
+     private $author = "";
+     private $preview = "";
+     private $timestamp;
+	 private $set;
+	 
+	 public function __construct($id,$author,$set) {
+	     $this->id     = $id;
+		 $this->author = $author;
+		 $this->set    = $set;
+	 }
+	
+	 public function Fetch($id) {
+	     $data         = new Connection();
+		 $data->Connect();
+		 $data->Query("select * from levels where id = ".$id);
+		 
+		 $obj          = mysql_fetch_assoc($data->query);
+		 $this->id     = $obj['id'];
+		 $this->author = $obj['author'];
+	 }
     
-    public function getId() {
-        return $this->id;
-    }
+     public function getId() {
+         return $this->id;
+     }
 
-    public function setId($id) {
-        $this->id = $id;
-    }
+     public function setId($id) {
+         $this->id = $id;
+     }
 
     public function getAuthor() {
         return $this->author;
     }
 
-    public function setAuthor($author) {
-        $this->author = $author;
-    }
+     public function setAuthor($author) {
+         $this->author = $author;
+     }
 
-    public function getPreview() {
-        return $this->preview;
-    }
+     public function getPreview() {
+         return $this->preview;
+     }
 
-    public function setPreview($preview) {
-        $this->preview = $preview;
-    }
+     public function setPreview($preview) {
+         $this->preview = $preview;
+     }
     
-    public function getTimestamp() {
-        return $this->timestamp;
-    }
+     public function getTimestamp() {
+         return $this->timestamp;
+     }
 
     public function setTimestamp($timestamp) {
         $this->timestamp = $timestamp;
     }
-
     
     public function Insert() {
-        $db = DatabaseManager::getDB();
+        $db = new Connection();
+		$db->Connect();
         $query = 'INSERT into level (author,preview) VALUES("'.$this->author.'","'.$this->preview.'")';
-        $db->query($query);
-        $this->setId($db->lastInsertId());
+        $db->Query($query);
     }
 }
 

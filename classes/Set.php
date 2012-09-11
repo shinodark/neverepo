@@ -28,52 +28,67 @@
  *
  * @author shino
  */
+
+include "Connection.php";
 class Set {
-    private $id = -1;
-    private $author = "";
-    private $name = "";
-    private $description = "";
-    private $picture = "";
+
+     private $id = -1;
+     private $name= "";
+     private $author = "";
+     private $description = "";
+     private $num = 25;
+	 
+	 public function Fetch($id) {
+	     $data = new Connection();
+		 $data->Connect();
+		 $data->Query("select * from sets where id = ".$id);
+		 
+		 $obj = mysql_fetch_assoc($data->Get());
+		 $this->id = $obj['id'];
+		 $this->name = $obj['name'];
+		 $this->author = $obj['author'];
+		 $this->num = $obj['num'];
+	 }
     
-    public function getId() {
-        return $this->id;
-    }
+     public function getId() {
+         return $this->id;
+     }
 
-    public function setId($id) {
-        $this->id = $id;
-    }
+     public function setId($id) {
+         $this->id = $id;
+     }
 
-    public function getAuthor() {
-        return $this->author;
-    }
+     public function getAuthor() {
+         return $this->author;
+     }
 
-    public function setAuthor($author) {
-        $this->author = $author;
-    }
+     public function setAuthor($author) {
+         $this->author = $author;
+     }
 
-    public function getName() {
-        return $this->name;
-    }
+     public function getName() {
+         return $this->name;
+     }
 
-    public function setName($name) {
-        $this->name = $name;
-    }
+     public function setName($name) {
+         $this->name = $name;
+     }
 
-    public function getDescription() {
-        return $this->description;
-    }
+     public function getDescription() {
+         return $this->description;
+     }
 
-    public function setDescription($description) {
-        $this->description = $description;
-    }
+     public function setDescription($description) {
+         $this->description = $description;
+     }
 
-    public function getPicture() {
-        return $this->picture;
-    }
+     public function getPicture() {
+         return $this->picture;
+     }
 
-    public function setPicture($picture) {
-        $this->picture = $picture;
-    }
+     public function setPicture($picture) {
+         $this->picture = $picture;
+     }
 
 
     

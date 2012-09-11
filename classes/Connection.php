@@ -7,7 +7,7 @@ class Connection {
 	 private $query;
 	 
      public function Connect() {
-         $this->link = mysql_connect("localhost", 'db name here', 'password here');
+         $this->link = mysql_connect("localhost", 'nblev_admin', 'pwd1');
          if (!$this->link) {
              echo "<script>alert(\"Can't connect: ". mysql_error() ."\");</script>";
          }
