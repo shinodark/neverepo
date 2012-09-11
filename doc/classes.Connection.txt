@@ -1,0 +1,19 @@
+Fields
+------
+     private link        : Reference to the connection
+	 private db_selected : Reference to the database
+	 private query       : last query results
+
+Methods
+-------
+     public Connect ()                    :void  - connect database
+     public Query   (string)              :void  - execute a query
+	     arg0 -> the query, in the SQL language
+	 public Get     ()                    :mysql - return the query results
+	 public Close   ()                    :void  - close the connection
+	 public Insert  (string,array,array)  :void  - Insert data on the database
+	     arg0 -> name of the table
+		 arg1 -> array of fields
+		 arg2 -> values
+
+	 

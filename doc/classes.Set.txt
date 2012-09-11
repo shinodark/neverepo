@@ -1,0 +1,18 @@
+Fields
+------
+     private id          : Identifier
+     private name        : The Name
+     private author      : The Author's username
+     private description : Description
+     private num         : Number of levels
+
+Methods
+-------
+     public getId          ()             :int    - Return the identifier
+     public setId          ($id)          :void   - Set the identifier
+     public getAuthor      ()             :string - Return the author
+     public setAuthor      ($author)      :void   - Set the author
+     public getName        ()             :string - Return the name
+     public setName        ($name)        :void   - Set the name
+     public getDescription ()             :string - Return the description
+     public setDescription ($description) :void   - Set the description

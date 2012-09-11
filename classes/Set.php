@@ -37,6 +37,7 @@ class Set {
      private $author = "";
      private $description = "";
      private $num = 25;
+	 private $picture;
 	 
 	 public function Fetch($id) {
 	     $data = new Connection();
