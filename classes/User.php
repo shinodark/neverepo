@@ -28,94 +28,92 @@
  *
  * @author shino,htnever
  */
-include "Connection.php";
 class User {
 
-     private $id;
-	 private $name;
-     private $username;
-     private $mail;
-     private $website;
-	 private $password;
-	 private $location;
-     private $timestamp;
-	
-	 public function Fetch($id) {
-	     $data = new Connection();
-		 $data->Connect();
-		 $data->Query("select * from users where id = ".$id);
-		 
-		 $obj = mysql_fetch_assoc($data->Get());
-		 $this->id = $obj['id'];
-		 $this->name = $obj['name'];
-		 $this->username = $obj['username'];
-		 $this->password = $obj['password'];
-	 }
-    
-     public function getId() {
-         return $this->id;
-     }
+    private $id;
+    private $name;
+    private $username;
+    private $mail;
+    private $website;
+    private $password;
+    private $location;
+    private $timestamp;
 
-     public function setId($id) {
-         $this->id = $id;
-     }
+    public function Fetch($id) {
+//        $data = new Connection();
+//        $data->Connect();
+//        $data->Query("select * from users where id = " . $id);
+//
+//        $obj = mysql_fetch_assoc($data->Get());
+//        $this->id = $obj['id'];
+//        $this->name = $obj['name'];
+//        $this->username = $obj['username'];
+//        $this->password = $obj['password'];
+    }
 
-     public function getName() {
-         return $this->name;
-     }
+    public function getId() {
+        return $this->id;
+    }
 
-     public function setName($name) {
-         $this->name = $name;
-     }
-	
-     public function getUsername() {
-         return $this->username;
-     }
+    public function setId($id) {
+        $this->id = $id;
+    }
 
-     public function setUsername($username) {
-         $this->username = $username;
-     }
+    public function getName() {
+        return $this->name;
+    }
 
-     public function getMail() {
-         return $this->mail;
-     }
+    public function setName($name) {
+        $this->name = $name;
+    }
 
-     public function setMail($mail) {
-         $this->mail = $mail;
-     }
+    public function getUsername() {
+        return $this->username;
+    }
 
-     public function getPassword() {
-         return $this->password;
-     }
+    public function setUsername($username) {
+        $this->username = $username;
+    }
 
-     public function setPassword($password) {
-         $this->password = $password;
-     }
-	 
-     public function getWebsite() {
-         return $this->website;
-     }
+    public function getMail() {
+        return $this->mail;
+    }
 
-     public function setWebsite($website) {
-         $this->website = $website;
-     }
-	 
-     public function getLocation() {
-         return $this->location;
-     }
+    public function setMail($mail) {
+        $this->mail = $mail;
+    }
 
-     public function setLocation($location) {
-         $this->location = $location;
-     }
+    public function getPassword() {
+        return $this->password;
+    }
 
-     public function getTimestamp() {
-         return $this->timestamp;
-     }
+    public function setPassword($password) {
+        $this->password = $password;
+    }
 
-     public function setTimestamp($timestamp) {
-         $this->timestamp = $timestamp;
-     }
+    public function getWebsite() {
+        return $this->website;
+    }
 
+    public function setWebsite($website) {
+        $this->website = $website;
+    }
+
+    public function getLocation() {
+        return $this->location;
+    }
+
+    public function setLocation($location) {
+        $this->location = $location;
+    }
+
+    public function getTimestamp() {
+        return $this->timestamp;
+    }
+
+    public function setTimestamp($timestamp) {
+        $this->timestamp = $timestamp;
+    }
 
 }
 

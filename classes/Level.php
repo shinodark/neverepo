@@ -28,67 +28,115 @@
  *
  * @author shino
  */
-include "Connection.php";
+
 class Level {
-     private $id = -1;
-     private $author = "";
-     private $preview = "";
-     private $timestamp;
-	 private $set;
-	 
-	 public function __construct($id,$author,$set) {
-	     $this->id     = $id;
-		 $this->author = $author;
-		 $this->set    = $set;
-	 }
-	
-	 public function Fetch($id) {
-	     $data         = new Connection();
-		 $data->Connect();
-		 $data->Query("select * from levels where id = ".$id);
-		 
-		 $obj          = mysql_fetch_assoc($data->query);
-		 $this->id     = $obj['id'];
-		 $this->author = $obj['author'];
-	 }
-    
-     public function getId() {
-         return $this->id;
-     }
 
-     public function setId($id) {
-         $this->id = $id;
-     }
+    private $id = -1;
+    private $author_id = -1;
+    private $preview = "";
+    private $timestamp;
 
-    public function getAuthor() {
-        return $this->author;
+    public function Fetch($id) {
+        $dbh = DatabaseManager::getDB();
+        $query = 'SELECT * FROM level where id=:id';
+        $sth = $dbh->prepare($query);
+        $sth->bindParam(':id', $id, PDO::PARAM_INT);
+        $sth->execute();
+        
+        $row = $sth->fetch(PDO::FETCH_ASSOC);
+        if ($row == FALSE) {
+            throw new NeverepoModelException("Level::Fecth() : cannot fetch level with id=".$id);
+        }
+        $this->Fill($row);
     }
 
-     public function setAuthor($author) {
-         $this->author = $author;
-     }
-
-     public function getPreview() {
-         return $this->preview;
-     }
-
-     public function setPreview($preview) {
-         $this->preview = $preview;
-     }
     
-     public function getTimestamp() {
-         return $this->timestamp;
-     }
+    public function Insert() {
+        if ($this->author_id == -1) {
+            throw new NeverepoModelException("Level::Insert() : Level is invalid.");
+        }
+        
+        $dbh = DatabaseManager::getDB();
+        $query = 'INSERT into level (author_id,preview) VALUES (:author_id,:preview)';
+        $sth = $dbh->prepare($query);
+        $sth->bindParam(':author_id', $this->author_id, PDO::PARAM_INT);
+        $sth->bindParam(':preview', $this->preview, PDO::PARAM_STR, 1024);
+        $sth->execute();
+        
+        $this->setId($dbh->lastInsertId());
+    }
+    
+    public function Delete() {
+        if (!$this->isValid()) {
+            throw new NeverepoModelException("Level::Delete() : Level is invalid.");
+        }
+        
+        $dbh = DatabaseManager::getDB();
+        $query = 'DELETE FROM level WHERE id=:id';
+        $sth = $dbh->prepare($query);
+        $sth->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $sth->execute();
+    }
+    
+    public function Update() {
+        if (!$this->isValid()) {
+            throw new NeverepoModelException("Level::Delete() : Level is invalid.");
+        }
+        
+        $dbh = DatabaseManager::getDB();
+        $query = 'UPDATE level SET author_id=:author_id,preview=:preview WHERE id=:id';
+        $sth = $dbh->prepare($query);
+        $sth->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $sth->bindParam(':author_id', $this->author_id, PDO::PARAM_INT);
+        $sth->bindParam(':preview', $this->preview, PDO::PARAM_STR, 1024);        
+        $sth->execute();        
+    }
+    
+    private function isValid() {
+        return ($this->id != -1 && $this->author_id != -1);
+    }
+    
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = (int)$id;
+    }
+
+    public function getAuthorId() {
+        return $this->author_id;
+    }
+
+    public function setAuthorId($author_id) {
+        $this->author_id = (int)$author_id;
+    }
+
+    public function getPreview() {
+        return $this->preview;
+    }
+
+    public function setPreview($preview) {
+        $this->preview = $preview;
+    }
+
+    public function getTimestamp() {
+        return $this->timestamp;
+    }
 
     public function setTimestamp($timestamp) {
         $this->timestamp = $timestamp;
     }
     
-    public function Insert() {
-        $db = new Connection();
-		$db->Connect();
-        $query = 'INSERT into level (author,preview) VALUES("'.$this->author.'","'.$this->preview.'")';
-        $db->Query($query);
+    public function Fill($array) {
+        if (array_key_exists('id', $array))
+            $this->setId($array['id']);
+        if (array_key_exists('author_id', $array))
+            $this->setAuthorId($array['author_id']);
+        if (array_key_exists('preview', $array))
+            $this->setPreview($array['preview']);
+        if (array_key_exists('timestamp', $array))
+            $this->setTimestamp($array['timestamp']);
     }
 }
 

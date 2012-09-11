@@ -3,6 +3,7 @@
   <tr>
     <td>{level.ID}</td>
     <td>{level.AUTHOR}</td>
+    <td>{level.PREVIEW}</td>    
   </tr>
   <!-- END level -->
 </table>

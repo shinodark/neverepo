@@ -28,71 +28,143 @@
  *
  * @author shino,htnever
  */
-
-include "Connection.php";
 class Set {
 
-     private $id = -1;
-     private $name= "";
-     private $author = "";
-     private $description = "";
-     private $num = 25;
-	 private $picture;
-	 
-	 public function Fetch($id) {
-	     $data = new Connection();
-		 $data->Connect();
-		 $data->Query("select * from sets where id = ".$id);
-		 
-		 $obj = mysql_fetch_assoc($data->Get());
-		 $this->id = $obj['id'];
-		 $this->name = $obj['name'];
-		 $this->author = $obj['author'];
-		 $this->num = $obj['num'];
-	 }
+    private $id = -1;
+    private $name = "";
+    private $author_id = "";
+    private $description = "";
+    private $num = 25;
+    private $picture;
+
+    public function Fetch($id) {
+        $dbh = DatabaseManager::getDB();
+        $query = 'SELECT * FROM `set` where id=:id';
+        $sth = $dbh->prepare($query);
+        $sth->bindParam(':id', $id, PDO::PARAM_INT);
+        $sth->execute();
+        
+        $row = $sth->fetch(PDO::FETCH_ASSOC);
+        if ($row == FALSE) {
+            throw new NeverepoModelException("Level::Fecth() : cannot fetch level with id=".$id);
+        }
+        $this->Fill($row);
+    }
     
-     public function getId() {
-         return $this->id;
-     }
-
-     public function setId($id) {
-         $this->id = $id;
-     }
-
-     public function getAuthor() {
-         return $this->author;
-     }
-
-     public function setAuthor($author) {
-         $this->author = $author;
-     }
-
-     public function getName() {
-         return $this->name;
-     }
-
-     public function setName($name) {
-         $this->name = $name;
-     }
-
-     public function getDescription() {
-         return $this->description;
-     }
-
-     public function setDescription($description) {
-         $this->description = $description;
-     }
-
-     public function getPicture() {
-         return $this->picture;
-     }
-
-     public function setPicture($picture) {
-         $this->picture = $picture;
-     }
-
-
+    public function Insert() {
+        if ($this->author_id == -1 || empty($this->name)) {
+            throw new NeverepoModelException("Set::Insert() : Level is invalid.");
+        }
+        
+        $dbh = DatabaseManager::getDB();
+        $query = 'INSERT INTO `set` (name,author_id,description,num,picture) VALUES (:name,:author_id,:description,:num,:picture)';
+        $sth = $dbh->prepare($query);
+        $sth->bindParam(':name', $this->name, PDO::PARAM_STR, 32);
+        $sth->bindParam(':author_id', $this->author_id, PDO::PARAM_INT);
+        $sth->bindParam(':description', $this->description, PDO::PARAM_STR, 1024);
+        $sth->bindParam(':num', $this->num, PDO::PARAM_INT);
+        $sth->bindParam(':picture', $this->picture, PDO::PARAM_STR, 1024);
+        $sth->execute();
+        
+        $this->setId($dbh->lastInsertId());
+    }
     
+    public function Delete() {
+        if (!$this->isValid()) {
+            throw new NeverepoModelException("Set::Delete() : Set is invalid.");
+        }
+        
+        $dbh = DatabaseManager::getDB();
+        $query = 'DELETE FROM `set` WHERE id=:id';
+        $sth = $dbh->prepare($query);
+        $sth->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $sth->execute();
+    }
+    
+    public function Update() {
+        if (!$this->isValid()) {
+            throw new NeverepoModelException("Set::Delete() : Set is invalid.");
+        }
+        
+        $dbh = DatabaseManager::getDB();
+        $query = 'UPDATE `set` SET name=:name,author_id=:author_id,description=:description,num=:num,picture=:picture WHERE id=:id';
+        $sth = $dbh->prepare($query);
+        $sth->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $sth->bindParam(':name', $this->name, PDO::PARAM_STR, 32);
+        $sth->bindParam(':author_id', $this->author_id, PDO::PARAM_INT);
+        $sth->bindParam(':description', $this->description, PDO::PARAM_STR, 1024);
+        $sth->bindParam(':num', $this->num, PDO::PARAM_INT);
+        $sth->bindParam(':picture', $this->picture, PDO::PARAM_STR, 1024);       
+        $sth->execute();        
+    }
+    
+    private function isValid() {
+        return ($this->id != -1 && $this->author_id != -1 && !empty($this->name));
+    }
+    
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = (int)$id;
+    }
+
+    public function getAuthorId() {
+        return $this->author_id;
+    }
+
+    public function setAuthorId($author) {
+        $this->author_id = $author;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+    }
+
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function setDescription($description) {
+        $this->description = $description;
+    }
+
+    public function getPicture() {
+        return $this->picture;
+    }
+
+    public function setPicture($picture) {
+        $this->picture = $picture;
+    }
+    
+    public function getNum() {
+        return $this->num;
+    }
+
+    public function setNum($num) {
+        $this->num = $num;
+    }
+
+    public function Fill($array) {
+        if (array_key_exists('id', $array))
+            $this->setId($array['id']);
+        if (array_key_exists('name', $array))
+            $this->setName($array['name']);        
+        if (array_key_exists('author_id', $array))
+            $this->setAuthorId($array['author_id']);
+        if (array_key_exists('description', $array))
+            $this->setDescription($array['description']);
+        if (array_key_exists('num', $array))
+            $this->setNum($array['num']);
+        if (array_key_exists('picture', $array))
+            $this->setPicture($array['picture']);        
+    }
 }
 
 ?>
