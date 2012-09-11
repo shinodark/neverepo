@@ -29,7 +29,7 @@ include_once "includes/libs_inc.php";
 include_once "includes/classes_inc.php";
 include_once "includes/ressources_inc.php";
 
-ConfigManager::loadConfigFile("config.ini");
+ConfigManager::loadConfigFile("../config.ini");
 
 $db = DatabaseManager::getDB();
 
@@ -55,6 +55,8 @@ $tpl = new Template('../views/');
 $tpl->set_filenames(array(
     'list_levels' => 'list_levels.tpl'
 ));
+
+$tpl->assign_var("MSG", _("Test message"));
 
 while ( $row = $res->fetch()) {
     $tpl->assign_block_vars('level', array(

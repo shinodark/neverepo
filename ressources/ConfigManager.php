@@ -51,12 +51,27 @@ class ConfigManager {
         if ($arr === FALSE) {
             throw new NeverepoRessourceException ("Can't load configuration file.");
         }
+        
         if (!array_key_exists('Database', $arr)) {
             throw new NeverepoRessourceException ("Invalid config file, missing Database section.");
         }
         foreach ($arr["Database"] as $key => $value)
             self::setProperty("database_".$key, $value);
+        
+        if (!array_key_exists('Locale', $arr)) {
+            throw new NeverepoRessourceException ("Invalid config file, missing Locale section.");
+        }
+        self::setLocale($arr["Locale"]["default"]);
     }
+    
+     public static function setLocale($lang) {
+        if (!empty($lang)) {
+            putenv("LC_ALL=".$lang);
+            setlocale(LC_ALL, $lang);
+            bindtextdomain("messages", "./ressources/locale");
+            textdomain("messages");
+        }
+     }
 }
 
 ?>
