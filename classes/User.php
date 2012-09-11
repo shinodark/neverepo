@@ -26,54 +26,95 @@
 /**
  * Description of User
  *
- * @author shino
+ * @author shino,htnever
  */
+include "Connection.php";
 class User {
-    private $id;
-    private $name;
-    private $mail;
-    private $password;
-    private $timestamp;
+
+     private $id;
+	 private $name;
+     private $username;
+     private $mail;
+     private $website;
+	 private $password;
+	 private $location;
+     private $timestamp;
+	
+	 public function Fetch($id) {
+	     $data = new Connection();
+		 $data->Connect();
+		 $data->Query("select * from users where id = ".$id);
+		 
+		 $obj = mysql_fetch_assoc($data->Get());
+		 $this->id = $obj['id'];
+		 $this->name = $obj['name'];
+		 $this->username = $obj['username'];
+		 $this->password = $obj['password'];
+	 }
     
-    public function getId() {
-        return $this->id;
-    }
+     public function getId() {
+         return $this->id;
+     }
 
-    public function setId($id) {
-        $this->id = $id;
-    }
+     public function setId($id) {
+         $this->id = $id;
+     }
 
-    public function getName() {
-        return $this->name;
-    }
+     public function getName() {
+         return $this->name;
+     }
 
-    public function setName($name) {
-        $this->name = $name;
-    }
+     public function setName($name) {
+         $this->name = $name;
+     }
+	
+     public function getUsername() {
+         return $this->username;
+     }
 
-    public function getMail() {
-        return $this->mail;
-    }
+     public function setUsername($username) {
+         $this->username = $username;
+     }
 
-    public function setMail($mail) {
-        $this->mail = $mail;
-    }
+     public function getMail() {
+         return $this->mail;
+     }
 
-    public function getPassword() {
-        return $this->password;
-    }
+     public function setMail($mail) {
+         $this->mail = $mail;
+     }
 
-    public function setPassword($password) {
-        $this->password = $password;
-    }
+     public function getPassword() {
+         return $this->password;
+     }
 
-    public function getTimestamp() {
-        return $this->timestamp;
-    }
+     public function setPassword($password) {
+         $this->password = $password;
+     }
+	 
+     public function getWebsite() {
+         return $this->website;
+     }
 
-    public function setTimestamp($timestamp) {
-        $this->timestamp = $timestamp;
-    }
+     public function setWebsite($website) {
+         $this->website = $website;
+     }
+	 
+     public function getLocation() {
+         return $this->location;
+     }
+
+     public function setLocation($location) {
+         $this->location = $location;
+     }
+
+     public function getTimestamp() {
+         return $this->timestamp;
+     }
+
+     public function setTimestamp($timestamp) {
+         $this->timestamp = $timestamp;
+     }
 
 
 }

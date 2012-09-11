@@ -26,7 +26,7 @@
 /**
  * Description of Set
  *
- * @author shino
+ * @author shino,htnever
  */
 
 include "Connection.php";
