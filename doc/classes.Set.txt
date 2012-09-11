@@ -9,10 +9,14 @@ Fields
 Methods
 -------
      public getId          ()             :int    - Return the identifier
-     public setId          ($id)          :void   - Set the identifier
+     public setId          (int)          :void   - Set the identifier
+	     arg0 -> new identifier
      public getAuthor      ()             :string - Return the author
-     public setAuthor      ($author)      :void   - Set the author
+     public setAuthor      (string)       :void   - Set the author
+	     arg0 -> new author
      public getName        ()             :string - Return the name
-     public setName        ($name)        :void   - Set the name
+     public setName        (string)       :void   - Set the name
+	     arg0 -> new name
      public getDescription ()             :string - Return the description
-     public setDescription ($description) :void   - Set the description
+     public setDescription (string)       :void   - Set the description
+	     arg0 -> new description
