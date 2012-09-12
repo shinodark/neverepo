@@ -44,7 +44,7 @@ class FileManager {
         $tmp_file = $files[$ident]['tmp_name'];
 
         if (empty($tmp_file))
-            $this->SetError("No uploaded file found.");
+            throw new NeverepoLibException(_("No uploaded file found."));
 
         /* test / at end of path */
         if (preg_match("/\/$/", $upload_dir) == 0)
@@ -57,18 +57,17 @@ class FileManager {
 
         if ($udp_error != 0) {
             switch ($udp_error) {
-                case 1 : $str = "File size exceeds the authorized php limit.";
+                case 1 : $str = _("File size exceeds the authorized php limit.");
                     break;
-                case 2 : $str = "File size exceeds the configured limit.";
+                case 2 : $str = _("File size exceeds the configured limit.");
                     break;
-                case 3 : $str = "File was only partially uploaded.";
+                case 3 : $str = _("File was only partially uploaded.");
                     break;
-                case 4 : $str = "What ? No file uploaded !";
+                case 4 : $str = _("What ? No file uploaded !");
                     break;
-                default: $str = "Unknown error, code " . $udp_error . ".";
+                default: $str = _("Unknown error, code ") . $udp_error;
             }
-            $this->SetError($str);
-            return false;
+            throw new NeverepoLibException($str);
         }
 
         if (!$always_overwrite) {
@@ -85,8 +84,7 @@ class FileManager {
             $this->filename = $upload_dir . $file_name;
             chmod($upload_dir . $file_name, fileperms($upload_dir) & ~0111);
         } else {
-            $this->SetError("Error uploading file on server.");
-            return false;
+            throw new NeverepoLibException(_("Error uploading file on server."));
         }
 
         return true;
@@ -96,7 +94,8 @@ class FileManager {
         if (@unlink($this->filename)) {
             return true;
         } else {
-            $this->SetError("Error deleting file " . $this->filename . " from server !");
+            $msg = sprintf(_("Error deleting file %s from server !"), $this->filename);
+            throw new NeverepoLibException($msg);
         }
     }
 
@@ -124,8 +123,8 @@ class FileManager {
         }
 
         if (!@rename($this->filename, $newfile)) {
-            $this->SetError("Error Moving file " . $this->filename . " to " . $newfile . ".");
-            return false;
+            $msg = sprintf(_("Error Moving file %s to %s."), $this->filename, $newfile);    
+            throw new NeverepoLibException($msg);
         } else {
             $this->filename = $newfile;
             return true;
@@ -135,12 +134,12 @@ class FileManager {
     function Rename($newname) {
         $newname = dirname($this->filename) . "/" . $newname;
         if (file_exists($newname)) {
-            $this->SetError("File with name " . $newname . " already exists, don't overwrite.");
-            return false;
+            $msg = sprintf(_("File with name %s already exists, don't overwrite."), $newname);     
+            throw new NeverepoLibException($msg);
         }
 
         if (!@rename($this->filename, $newname)) {
-            $this->SetError("Error Renaming file " . $this->filename . " .");
+            throw new NeverepoLibException(_("Error Renaming file %s."));
             return false;
         } else {
             return true;
@@ -166,7 +165,7 @@ class FileManager {
             return array("files" => $f_arr, "subdir" => $d_arr);
         }
         else {
-            $this->SetError("Error opening directory " . $dir . " .");
+            throw new NeverepoLibException(_("Error opening directory " . $dir));
             return false;
         }
     }
@@ -174,7 +173,7 @@ class FileManager {
     function GetSize($unit = "o") {
         $res = @stat($this->filename);
         if (!$res) {
-            $this->SetError("Error in stat file " . $this->filename . " .");
+            throw new NeverepoLibException(_("Error in stat file ") . $this->filename);
             return false;
         }
         switch ($unit) {
@@ -200,14 +199,14 @@ class FileManager {
     function Open($att = "r") {
         if (!isset($this->handle)) {
             if ($att == "r" && (!file_exists($this->filename) || !is_readable($this->filename))) {
-                $this->SetError("file " . $this->filename . " doesn't exist or is not readable");
-                return false;
+                $msg = sprintf("file %s doesn't exist or is not readable", $this->filename);
+                throw new NeverepoLibException($msg);
             }
             $this->handle = @fopen($this->filename, $att);
         }
         if (!$this->handle) {
-            $this->SetError("Error opening file " . $this->filename . " with attribute " . $att);
-            return false;
+            $msg = sprintf(_("Error opening file %s with attribute %s"), $this->filename, $att);
+            throw new NeverepoLibException($msg);
         }
         return true;
     }
@@ -260,8 +259,8 @@ class FileManager {
     function ReadString() {
         $data = file_get_contents($this->filename);
         if (!$data) {
-            $this->SetError("Error opening file " . $this->filename . " for reading.");
-            return false;
+            $msg = sprintf("Error opening file %s for reading.", $this->filename);
+            throw new NeverepoLibException($msg);
         }
         return $data;
     }
@@ -273,12 +272,12 @@ class FileManager {
                 return false;
         }
         if (!@fwrite($this->handle, $data)) {
-            $this->SetError("Error writing data to file " . $this->filename . " .");
+            throw new NeverepoLibException(_("Error writing data to file ") . $this->filename);
             return false;
         }
         $this->Close();
         if (!@chmod($this->filename, 0666)) {
-            $this->SetError("Error chmod file " . $this->filename . " .");
+            throw new NeverepoLibException(_("Error chmod file " . $this->filename));
         }
         return true;
     }
@@ -387,14 +386,4 @@ class FileManager {
     function SetFileName($filename) {
         $this->filename = ROOT_PATH . $filename;
     }
-
-    function SetError($error) {
-        $this->error = $error;
-        throw new Exception($this->error);
-    }
-
-    function GetError() {
-        return $this->error;
-    }
-
 }

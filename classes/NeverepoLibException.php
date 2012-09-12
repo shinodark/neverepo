@@ -23,53 +23,13 @@
   # ***** END LICENSE BLOCK *****
  */
 
-set_include_path("..");
+/**
+ * Description of NeverepoModelException
+ *
+ * @author shino
+ */
+class NeverepoLibException extends Exception {
 
-include_once "includes/libs_inc.php";
-include_once "includes/classes_inc.php";
-include_once "includes/ressources_inc.php";
-
-ConfigManager::loadConfigFile("config.ini");
-
-$db = DatabaseManager::getDB();
-
-
-$level = new Level();
-
-$level->setAuthorId(1);
-$level->setPreview("pic1");
-$level->Insert();
-$level->Insert();
-$level->Delete();
-
-$level->Fetch(1);
-$level->setPreview($level->getPreview() . '+');
-$level->Update();
-
-echo "<br/>";
-
-$res = $db->query("SELECT * FROM level");
-
-$tpl = new Template('../views/');
-
-$tpl->set_filenames(array(
-    'list_levels' => 'list_levels.tpl'
-));
-
-$tpl->assign_var("MSG", _("Test message"));
-
-while ( $row = $res->fetch()) {
-    $tpl->assign_block_vars('level', array(
-        'ID' => $row['id'],
-        'AUTHOR' => $row['author_id'],
-        'PREVIEW' => $row['preview']
-    ));
 }
 
-$tpl->pparse('list_levels');
-
-echo "fin";
-
-
-        
 ?>

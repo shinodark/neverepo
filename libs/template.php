@@ -99,7 +99,7 @@ class Template {
      */
     function pparse($handle) {
         if (!$this->loadfile($handle)) {
-            throw new Exception("Template->pparse(): Unable to load file for model $handle");
+            throw new NeverepoLibException("Template->pparse(): Unable to load file for model $handle");
         }
 
         // actually compile the template now.
@@ -123,7 +123,7 @@ class Template {
      */
     function assign_var_from_handle($varname, $handle) {
         if (!$this->loadfile($handle)) {
-            throw new Exception("Template->assign_var_from_handle(): Unable to load file for model $handle");
+            throw new NeverepoLibException("Template->assign_var_from_handle(): Unable to load file for model $handle");
         }
 
         // Compile it, with the "no echo statements" option on.
@@ -206,7 +206,7 @@ class Template {
         }
 
         if (!file_exists($filename)) {
-            throw new Exception("Template->make_filename(): File $filename desoe't");
+            throw new NeverepoLibException("Template->make_filename(): File $filename desoe't");
         }
 
         return $filename;
@@ -224,14 +224,14 @@ class Template {
 
         // If we don't have a file assigned to this handle, die.
         if (!isset($this->files[$handle])) {
-            throw new Exception("Template->loadfile(): No file specified for model $handle");
+            throw new NeverepoLibException("Template->loadfile(): No file specified for model $handle");
         }
 
         $filename = $this->files[$handle];
 
         $str = implode("", @file($filename));
         if (empty($str)) {
-            throw new Exception("Template->loadfile(): File $filename for model $handle is empty");
+            throw new NeverepoLibException("Template->loadfile(): File $filename for model $handle is empty");
         }
 
         $this->uncompiled_code[$handle] = $str;

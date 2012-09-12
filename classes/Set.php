@@ -46,7 +46,7 @@ class Set {
         
         $row = $sth->fetch(PDO::FETCH_ASSOC);
         if ($row == FALSE) {
-            throw new NeverepoModelException("Level::Fecth() : cannot fetch level with id=".$id);
+            throw new NeverepoModelException(_("Level::Fecth() : cannot fetch level with id=").$id);
         }
         $this->Fill($row);
     }
@@ -71,7 +71,7 @@ class Set {
     
     public function Delete() {
         if (!$this->isValid()) {
-            throw new NeverepoModelException("Set::Delete() : Set is invalid.");
+            throw new NeverepoModelException(_("Set::Delete() : Set is invalid."));
         }
         
         $dbh = DatabaseManager::getDB();
@@ -83,7 +83,7 @@ class Set {
     
     public function Update() {
         if (!$this->isValid()) {
-            throw new NeverepoModelException("Set::Delete() : Set is invalid.");
+            throw new NeverepoModelException(_("Set::Delete() : Set is invalid."));
         }
         
         $dbh = DatabaseManager::getDB();

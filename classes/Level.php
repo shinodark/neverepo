@@ -45,7 +45,7 @@ class Level {
         
         $row = $sth->fetch(PDO::FETCH_ASSOC);
         if ($row == FALSE) {
-            throw new NeverepoModelException("Level::Fecth() : cannot fetch level with id=".$id);
+            throw new NeverepoModelException(_("Level::Fecth() : cannot fetch level with id=").$id);
         }
         $this->Fill($row);
     }
@@ -53,7 +53,7 @@ class Level {
     
     public function Insert() {
         if ($this->author_id == -1) {
-            throw new NeverepoModelException("Level::Insert() : Level is invalid.");
+            throw new NeverepoModelException(_("Level::Insert() : Level is invalid."));
         }
         
         $dbh = DatabaseManager::getDB();
@@ -68,7 +68,7 @@ class Level {
     
     public function Delete() {
         if (!$this->isValid()) {
-            throw new NeverepoModelException("Level::Delete() : Level is invalid.");
+            throw new NeverepoModelException(_("Level::Delete() : Level is invalid."));
         }
         
         $dbh = DatabaseManager::getDB();
@@ -80,7 +80,7 @@ class Level {
     
     public function Update() {
         if (!$this->isValid()) {
-            throw new NeverepoModelException("Level::Delete() : Level is invalid.");
+            throw new NeverepoModelException(_("Level::Delete() : Level is invalid."));
         }
         
         $dbh = DatabaseManager::getDB();
