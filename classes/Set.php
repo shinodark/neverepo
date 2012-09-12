@@ -28,7 +28,7 @@
  *
  * @author shino,htnever
  */
-class Set {
+class Set extends NeverepoModelClass {
 
     private $id = -1;
     private $name = "";
@@ -149,21 +149,6 @@ class Set {
 
     public function setNum($num) {
         $this->num = $num;
-    }
-
-    public function Fill($array) {
-        if (array_key_exists('id', $array))
-            $this->setId($array['id']);
-        if (array_key_exists('name', $array))
-            $this->setName($array['name']);        
-        if (array_key_exists('author_id', $array))
-            $this->setAuthorId($array['author_id']);
-        if (array_key_exists('description', $array))
-            $this->setDescription($array['description']);
-        if (array_key_exists('num', $array))
-            $this->setNum($array['num']);
-        if (array_key_exists('picture', $array))
-            $this->setPicture($array['picture']);        
     }
 }
 

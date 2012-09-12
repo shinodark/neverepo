@@ -29,7 +29,7 @@
  * @author shino
  */
 
-class Level {
+class Level extends NeverepoModelClass {
 
     private $id = -1;
     private $author_id = -1;
@@ -126,17 +126,6 @@ class Level {
 
     public function setTimestamp($timestamp) {
         $this->timestamp = $timestamp;
-    }
-    
-    public function Fill($array) {
-        if (array_key_exists('id', $array))
-            $this->setId($array['id']);
-        if (array_key_exists('author_id', $array))
-            $this->setAuthorId($array['author_id']);
-        if (array_key_exists('preview', $array))
-            $this->setPreview($array['preview']);
-        if (array_key_exists('timestamp', $array))
-            $this->setTimestamp($array['timestamp']);
     }
 }
 
