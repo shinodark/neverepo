@@ -31,23 +31,12 @@
 
 class Level extends NeverepoModelClass {
 
-    private $id = -1;
     private $author_id = -1;
     private $preview = "";
     private $timestamp;
 
-    public function Fetch($id) {
-        $dbh = DatabaseManager::getDB();
-        $query = 'SELECT * FROM level where id=:id';
-        $sth = $dbh->prepare($query);
-        $sth->bindParam(':id', $id, PDO::PARAM_INT);
-        $sth->execute();
-        
-        $row = $sth->fetch(PDO::FETCH_ASSOC);
-        if ($row == FALSE) {
-            throw new NeverepoModelException(_("Level::Fecth() : cannot fetch level with id=").$id);
-        }
-        $this->Fill($row);
+    public function __construct() {
+        parent::__construct();
     }
 
     
@@ -57,7 +46,7 @@ class Level extends NeverepoModelClass {
         }
         
         $dbh = DatabaseManager::getDB();
-        $query = 'INSERT into level (author_id,preview) VALUES (:author_id,:preview)';
+        $query = 'INSERT into `level` (author_id,preview) VALUES (:author_id,:preview)';
         $sth = $dbh->prepare($query);
         $sth->bindParam(':author_id', $this->author_id, PDO::PARAM_INT);
         $sth->bindParam(':preview', $this->preview, PDO::PARAM_STR, 1024);
@@ -66,25 +55,13 @@ class Level extends NeverepoModelClass {
         $this->setId($dbh->lastInsertId());
     }
     
-    public function Delete() {
-        if (!$this->isValid()) {
-            throw new NeverepoModelException(_("Level::Delete() : Level is invalid."));
-        }
-        
-        $dbh = DatabaseManager::getDB();
-        $query = 'DELETE FROM level WHERE id=:id';
-        $sth = $dbh->prepare($query);
-        $sth->bindParam(':id', $this->id, PDO::PARAM_INT);
-        $sth->execute();
-    }
-    
     public function Update() {
         if (!$this->isValid()) {
             throw new NeverepoModelException(_("Level::Delete() : Level is invalid."));
         }
         
         $dbh = DatabaseManager::getDB();
-        $query = 'UPDATE level SET author_id=:author_id,preview=:preview WHERE id=:id';
+        $query = 'UPDATE `level` SET author_id=:author_id,preview=:preview WHERE id=:id';
         $sth = $dbh->prepare($query);
         $sth->bindParam(':id', $this->id, PDO::PARAM_INT);
         $sth->bindParam(':author_id', $this->author_id, PDO::PARAM_INT);
@@ -92,7 +69,7 @@ class Level extends NeverepoModelClass {
         $sth->execute();        
     }
     
-    private function isValid() {
+    public function isValid() {
         return ($this->id != -1 && $this->author_id != -1);
     }
     

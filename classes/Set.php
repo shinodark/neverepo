@@ -30,25 +30,14 @@
  */
 class Set extends NeverepoModelClass {
 
-    private $id = -1;
     private $name = "";
     private $author_id = "";
     private $description = "";
     private $num = 25;
     private $picture;
 
-    public function Fetch($id) {
-        $dbh = DatabaseManager::getDB();
-        $query = 'SELECT * FROM `set` where id=:id';
-        $sth = $dbh->prepare($query);
-        $sth->bindParam(':id', $id, PDO::PARAM_INT);
-        $sth->execute();
-        
-        $row = $sth->fetch(PDO::FETCH_ASSOC);
-        if ($row == FALSE) {
-            throw new NeverepoModelException(_("Level::Fecth() : cannot fetch level with id=").$id);
-        }
-        $this->Fill($row);
+    public function __construct() {
+        parent::__construct();
     }
     
     public function Insert() {
@@ -69,18 +58,6 @@ class Set extends NeverepoModelClass {
         $this->setId($dbh->lastInsertId());
     }
     
-    public function Delete() {
-        if (!$this->isValid()) {
-            throw new NeverepoModelException(_("Set::Delete() : Set is invalid."));
-        }
-        
-        $dbh = DatabaseManager::getDB();
-        $query = 'DELETE FROM `set` WHERE id=:id';
-        $sth = $dbh->prepare($query);
-        $sth->bindParam(':id', $this->id, PDO::PARAM_INT);
-        $sth->execute();
-    }
-    
     public function Update() {
         if (!$this->isValid()) {
             throw new NeverepoModelException(_("Set::Delete() : Set is invalid."));
@@ -98,7 +75,7 @@ class Set extends NeverepoModelClass {
         $sth->execute();        
     }
     
-    private function isValid() {
+    public function isValid() {
         return ($this->id != -1 && $this->author_id != -1 && !empty($this->name));
     }
     
