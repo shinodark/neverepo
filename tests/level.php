@@ -29,7 +29,6 @@ include_once "includes/libs_inc.php";
 include_once "includes/classes_inc.php";
 include_once "includes/ressources_inc.php";
 
-ConfigManager::loadConfigFile("config.ini");
 
 $db = DatabaseManager::getDB();
 

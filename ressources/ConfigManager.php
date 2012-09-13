@@ -49,17 +49,26 @@ class ConfigManager {
         $arr = parse_ini_file($path, true);
         
         if ($arr === FALSE) {
-            throw new NeverepoRessourceException ("Can't load configuration file.");
+            throw new NeverepoRessourceException (_("Can't load configuration file."));
         }
         
+        /** Database options **/
         if (!array_key_exists('Database', $arr)) {
-            throw new NeverepoRessourceException ("Invalid config file, missing Database section.");
+            throw new NeverepoRessourceException (_("Invalid config file, missing Database section."));
         }
         foreach ($arr["Database"] as $key => $value)
             self::setProperty("database_".$key, $value);
+
+        /** Auth options **/
+        if (!array_key_exists('Auth', $arr)) {
+            throw new NeverepoRessourceException (_("Invalid config file, missing Auth section."));
+        }
+        foreach ($arr["Auth"] as $key => $value)
+            self::setProperty("auth_".$key, $value);      
         
+        /** Locale **/
         if (!array_key_exists('Locale', $arr)) {
-            throw new NeverepoRessourceException ("Invalid config file, missing Locale section.");
+            throw new NeverepoRessourceException (_("Invalid config file, missing Locale section."));
         }
         self::setLocale($arr["Locale"]["default"]);
     }
@@ -73,5 +82,7 @@ class ConfigManager {
         }
      }
 }
+
+ConfigManager::loadConfigFile("config.ini");
 
 ?>

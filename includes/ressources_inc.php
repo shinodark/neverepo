@@ -25,4 +25,5 @@
 
 include_once "ressources/ConfigManager.php";
 include_once "ressources/DatabaseManager.php";
+include_once "ressources/AuthManager.php";
 ?>
