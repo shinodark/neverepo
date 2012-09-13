@@ -23,39 +23,18 @@
   # ***** END LICENSE BLOCK *****
  */
 
-/**
- * AutentificationHelper
- *
- * @author shino,htnever
- */
+set_include_path("..");
 
-define('FORUM_ROOT', "../".ConfigManager::getProperty("auth_punroot"));
-require FORUM_ROOT.'include/common.php';
+include_once "includes/libs_inc.php";
+include_once "includes/classes_inc.php";
+include_once "includes/ressources_inc.php";
 
-class AuthManager {
+$tpl = new Template('../views/');
 
-    static public function OpenSession() {
-        global $forum_user;
-        session_name("__table15");
-        session_start();
-        if (!$forum_user["is_guest"]) {
-            $_SESSION['user_logged'] = true;
-            $_SESSION['user_id'] = $forum_user["id"];
-            $_SESSION['user_name'] = $forum_user["username"];
-            $_SESSION['user_email'] = $forum_user["mail"];;
-            $_SESSION['user_group'] = $forum_user["group_id"];
-        }
-        else {
-            $_SESSION['user_logged'] = false;
-            $_SESSION['user_id'] = 0;
-        }
-    }
+$tpl->set_filenames(array(
+    'index' => 'index.tpl'
+));
 
-    function CloseSession() {
-        $_SESSION = array();
-        session_unset();
-        session_destroy();
-    }
-}
+$tpl->pparse('index');
 
-AuthManager::OpenSession();
+?>

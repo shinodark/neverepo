@@ -1,0 +1,72 @@
+/* 
+    Document   : default
+    Created on : 13 sept. 2012, 21:19:28
+    Author     : ht-never
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+body {
+    background: #FF4949 url(../img/bg.png);
+    background-repeat: repeat-x;	
+}
+
+@font-face {
+    font-family: Neverball;
+    src: url('../fonts/DejaVuSans-Bold.ttf');
+}
+
+.words {
+    position: relative;
+    left: 25%;
+    top: 35%;
+    width: 40%;
+    height: 40%;
+    border: none;
+}
+
+.words a {
+    text-decoration: none;
+    color: black;
+}
+
+.words:hover {
+    font: 20px Neverball;
+    text-shadow: 2px 2px red;
+}
+
+div {
+    position:absolute;
+    width:200px;
+    height:200px;
+    border: 1px solid black;
+
+    float: center;
+    font: 18px Neverball;
+}
+
+#topleft {
+    background-color: blue;
+    left: 30%;
+    top: 10%;
+}
+
+#topright {
+    background-color: red;
+    left: 50%;
+    top: 10%;
+}
+
+#bottomleft {
+    background-color: green;
+    left: 30%;
+    top: 50%;
+}
+
+#bottomright {
+    background-color: yellow;
+    left: 50%;
+    top: 50%;
+}
+
