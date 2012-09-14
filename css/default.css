@@ -33,7 +33,7 @@ body {
 
 .words:hover {
     font: 20px Neverball;
-    text-shadow: 2px 2px red;
+    text-shadow: 1px 1px grey;
 }
 
 div {
