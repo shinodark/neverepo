@@ -33,21 +33,15 @@ ConfigManager::loadConfigFile("config.ini");
 
 $db = DatabaseManager::getDB();
 
+$playlist = new LevelsSetAssoc();
 
-$level = new Level();
-$set = new Set();
-
-
-$level->Fetch(1);
-$set->Fetch(1);
-
-echo "<br/>";
-
-$db->query("INSERT INTO playlist (level_id,set_id) VALUES (3,1)");
-$db->query("INSERT INTO playlist (level_id,set_id) VALUES (3,3)");
-$db->query("INSERT INTO playlist (level_id,set_id) VALUES (1,5)");
-
-$res = $db->query("SELECT * FROM playlist LEFT JOIN level ON level.id=playlist.level_id LEFT JOIN `set` ON set.id=playlist.set_id");
+$playlist->removeAll(1);
+$playlist->addLevel(1, 1);
+$playlist->addLevel(2, 1);
+$playlist->addLevel(3, 1);
+$playlist->addLevel(4, 1);
+$playlist->addLevel(6, 1, 2);
+$playlist->removeLevel(1, 4);
 
 $tpl = new Template('../views/');
 
@@ -55,18 +49,17 @@ $tpl->set_filenames(array(
     'playlist' => 'playlist.tpl'
 ));
 
-while ( $row = $res->fetch()) {
+$res = $playlist->getPlaylist(1);
+
+foreach ($res as $place => $level) {
     $tpl->assign_block_vars('playlist', array(
-        'preview' => $row['preview'],
-        'set_name' => $row['name'],
-        'user_id' => $row['author_id']
+        'place' => $place,
+        'level_id' => $level->getId(),
+        'preview' => $level->getPreview(),
     ));
 }
 
 $tpl->pparse('playlist');
 
 echo "fin";
-
-
-        
 ?>

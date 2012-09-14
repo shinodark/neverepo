@@ -39,6 +39,12 @@ $level->setAuthorId(1);
 $level->setPreview("pic1");
 $level->Insert();
 $level->Insert();
+$level->Insert();
+$level->Insert();
+$level->Insert();
+$level->Insert();
+$level->Insert();
+$level->Insert();
 $level->Delete();
 
 $level->Fetch(1);

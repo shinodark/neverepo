@@ -31,4 +31,5 @@ include_once "classes/NeverepoModelClassDBO.php";
 include_once "classes/Level.php";
 include_once "classes/Set.php";
 include_once "classes/User.php";
+include_once "classes/LevelsSetAssoc.php";
 ?>
