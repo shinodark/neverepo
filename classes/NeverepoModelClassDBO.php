@@ -38,39 +38,45 @@
  * 
  * @author shino
  */
-abstract class NeverepoModelClass {
-    protected $rc;
+abstract class NeverepoModelClassDBO extends NeverepoModelClass {
+    
+    protected $tableName;
+    protected $className;
+    protected $id = -1;  // All model classes should have an id
     
     function __construct() {
-        $this->rc = new ReflectionClass($this);
+        parent::__construct();
+        $this->className = $this->rc->getName();
+        $this->tableName = lcfirst($this->className);
     }
     
-    public function Fill($array) {
-        foreach ($array as $key => $value) {
-            $methodName = $this->getCanonicalSetter($key);
-            if ($this->rc->hasMethod($methodName)) {
-                $this->rc->getMethod($methodName)->invoke($this, $value);
-            }
-        }
-    }
-       
-    private function getCanonicalSetter($property) {
-        return "set".$this->getCanonicalName($property);
-    }
-    
-    private function getCanonicalGetter($property) {
-        return "get".$this->getCanonicalName($property);
-    }
-    
-    private function getCanonicalName($property) {
-        $tmp = explode("_", $property);
-        $canon = "";
+    public function Fetch($id) {
+        $dbh = DatabaseManager::getDB();
+        $query = 'SELECT * FROM `'. $this->tableName .'` where id=:id';
+        $sth = $dbh->prepare($query);
+        $sth->bindParam(':id', $id, PDO::PARAM_INT);
+        $sth->execute();
         
-        foreach ($tmp as $str) {
-            $canon = $canon .  ucfirst($str);
+        $row = $sth->fetch(PDO::FETCH_ASSOC);
+        if ($row == FALSE) {
+            throw new NeverepoModelException($this->className . "::" . _("Fecth() : cannot fetch with id=").$id);
         }
-        return $canon;
+        $this->Fill($row);
     }
+    
+    public function Delete() {
+        if (!$this->isValid()) {
+            throw new NeverepoModelException($this->className . "::" . _("Delete() : invalid data."));
+        }
+        
+        $dbh = DatabaseManager::getDB();
+        $query = 'DELETE FROM `'. $this->tableName .'` WHERE id=:id';
+        $sth = $dbh->prepare($query);
+        $sth->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $sth->execute();
+    }
+    
+    abstract public function isValid();
 }
 
 ?>

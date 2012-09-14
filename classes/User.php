@@ -24,96 +24,95 @@
  */
 
 /**
- * Description of User
+ * Description of User according to punBB model
+ * It's a read only class.
  *
  * @author shino,htnever
  */
-class User {
-
+class User extends NeverepoModelClass {
+    
     private $id;
-    private $name;
+    private $group_id;
     private $username;
-    private $mail;
-    private $website;
-    private $password;
-    private $location;
-    private $timestamp;
-
-    public function Fetch($id) {
-//        $data = new Connection();
-//        $data->Connect();
-//        $data->Query("select * from users where id = " . $id);
-//
-//        $obj = mysql_fetch_assoc($data->Get());
-//        $this->id = $obj['id'];
-//        $this->name = $obj['name'];
-//        $this->username = $obj['username'];
-//        $this->password = $obj['password'];
-    }
+    private $email;
+    private $title;
+    private $realname;
+    private $avatar;
+    private $avatar_width;
+    private $avatar_height;    
 
     public function getId() {
         return $this->id;
     }
 
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    public function getName() {
-        return $this->name;
-    }
-
-    public function setName($name) {
-        $this->name = $name;
+    public function getGroup_id() {
+        return $this->group_id;
     }
 
     public function getUsername() {
         return $this->username;
     }
 
+    public function getEmail() {
+        return $this->email;
+    }
+
+    public function getTitle() {
+        return $this->title;
+    }
+
+    public function getRealname() {
+        return $this->realname;
+    }
+
+    public function getAvatar() {
+        return $this->avatar;
+    }
+
+    public function getAvatar_width() {
+        return $this->avatar_width;
+    }
+
+    public function getAvatar_height() {
+        return $this->avatar_height;
+    }
+    
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function setGroup_id($group_id) {
+        $this->group_id = $group_id;
+    }
+
     public function setUsername($username) {
         $this->username = $username;
     }
 
-    public function getMail() {
-        return $this->mail;
+    public function setEmail($email) {
+        $this->email = $email;
     }
 
-    public function setMail($mail) {
-        $this->mail = $mail;
+    public function setTitle($title) {
+        $this->title = $title;
     }
 
-    public function getPassword() {
-        return $this->password;
+    public function setRealname($realname) {
+        $this->realname = $realname;
     }
 
-    public function setPassword($password) {
-        $this->password = $password;
+    public function setAvatar($avatar) {
+        $this->avatar = $avatar;
     }
 
-    public function getWebsite() {
-        return $this->website;
+    public function setAvatar_width($avatar_width) {
+        $this->avatar_width = $avatar_width;
     }
 
-    public function setWebsite($website) {
-        $this->website = $website;
+    public function setAvatar_height($avatar_height) {
+        $this->avatar_height = $avatar_height;
     }
 
-    public function getLocation() {
-        return $this->location;
-    }
-
-    public function setLocation($location) {
-        $this->location = $location;
-    }
-
-    public function getTimestamp() {
-        return $this->timestamp;
-    }
-
-    public function setTimestamp($timestamp) {
-        $this->timestamp = $timestamp;
-    }
 
 }
 

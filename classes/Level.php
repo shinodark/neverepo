@@ -29,7 +29,7 @@
  * @author shino
  */
 
-class Level extends NeverepoModelClass {
+class Level extends NeverepoModelClassDBO {
 
     private $author_id = -1;
     private $preview = "";

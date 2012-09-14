@@ -23,12 +23,23 @@
   # ***** END LICENSE BLOCK *****
  */
 
-include_once "classes/NeverepoModelException.php";
-include_once "classes/NeverepoRessourceException.php";
-include_once "classes/NeverepoLibException.php";
-include_once "classes/NeverepoModelClass.php";
-include_once "classes/NeverepoModelClassDBO.php";
-include_once "classes/Level.php";
-include_once "classes/Set.php";
-include_once "classes/User.php";
-?>
+set_include_path("..");
+
+include_once "includes/ressources_inc.php";
+include_once "includes/classes_inc.php";
+
+try {
+    $user = ForumUsersManager::getUserInfo(1);
+
+    echo "id 1 is " . $user->getUserName() . "<br/>";
+
+    $user = ForumUsersManager::getUserInfo(2);
+    echo "id 2 is " . $user->getUserName() . " <br/>";
+
+    $user = ForumUsersManager::getUserInfo(3);
+    echo "id 3 is " . $user->getUserName() . " <br/>";
+
+    $user = ForumUsersManager::getUserInfo(9999);
+} catch (NeverepoRessourceException $ex) {
+    echo '<span style="color:red;">' . $ex->getMessage() . '</span>';
+}

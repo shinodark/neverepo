@@ -30,7 +30,7 @@
  */
 
 define('FORUM_ROOT', "../".ConfigManager::getProperty("auth_punroot"));
-require FORUM_ROOT.'include/common.php';
+require_once FORUM_ROOT.'include/common.php';
 
 class AuthManager {
 

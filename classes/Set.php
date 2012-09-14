@@ -28,7 +28,7 @@
  *
  * @author shino,htnever
  */
-class Set extends NeverepoModelClass {
+class Set extends NeverepoModelClassDBO {
 
     private $name = "";
     private $author_id = "";
