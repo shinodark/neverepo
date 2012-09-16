@@ -25,29 +25,21 @@
 
 set_include_path("..");
 
-include_once "includes/libs_inc.php";
 include_once "includes/classes_inc.php";
+include_once "includes/libs_inc.php";
 include_once "includes/ressources_inc.php";
 
+$file = $_FILES['file']['tmp_name'];
 
-$db = DatabaseManager::getDB();
+try {
+    $f = new FileManager();
+    $f->Upload($_FILES, 'file', '../files', md5_file($file).'.sol', true);
+}
+catch (NeverepoLibException $e) {
+    return $e->getMessage();
+}
 
-
-
-$tpl = new Template('../views/');
-
-$tpl->set_filenames(array(
-    'upload' => 'upload.tpl'
-));
-
-$tpl->assign_vars(array(
-    "L_UPLOAD" => _("Upload"),
-    "L_ERR_EXT" => _("Wrong file type : shold be a sol file"),
-    "L_ERR_EXT" => _("Upload successful"),
-));
-
-
-$tpl->pparse('upload');
+echo "true";
 
         
 ?>

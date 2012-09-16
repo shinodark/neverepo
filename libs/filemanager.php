@@ -26,12 +26,8 @@ if (!defined('PATHMAX'))
 
 class FileManager {
 
-    private $filename;
-    private $handle;
-
-    function __construct($filename) {
-        $this->filename = $filename;
-    }
+    private $filename = "";
+    private $handle = null;
 
     /**
      * @param files $_FILES struct 
@@ -384,6 +380,6 @@ class FileManager {
     }
 
     function SetFileName($filename) {
-        $this->filename = ROOT_PATH . $filename;
+        $this->filename = $filename;
     }
 }

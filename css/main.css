@@ -72,3 +72,16 @@ body {
     text-shadow: 1px 1px grey;
 }
 
+.message {
+    border: 2px;
+    display: none;
+}
+
+#successMessage {
+    background: lightgreen;
+}
+
+
+#errorMessage {
+    background: lightcoral;
+}
