@@ -33,41 +33,15 @@ include_once "includes/ressources_inc.php";
 $db = DatabaseManager::getDB();
 
 
-$set = new Set();
-
-$set->setAuthorId(1);
-$set->setName("Nevercool");
-$set->setDescription("A very cool set of my own.");
-$set->setPicture("*_*");
-$set->Insert();
-$set->Insert();
-$set->Delete();
-
-$set->Fetch(1);
-$set->setPicture($set->getPicture() . ' \_o< ');
-$set->Update();
-
-echo "<br/>";
-
-$res = $db->query("SELECT * FROM `set");
 
 $tpl = new Template('../views/');
 
 $tpl->set_filenames(array(
-    'list_sets' => 'list_sets.tpl'
+    'upload' => 'upload.tpl'
 ));
 
-while ( $row = $res->fetch()) {
-    $tpl->assign_block_vars('set', array(
-        'ID' => $row['id'],
-        'AUTHOR' => $row['author_id'],
-        'NAME' => $row['name'],
-        'DESCRIPTION' => $row['description'],
-        'PICTURE' => $row['picture'],
-    ));
-}
 
-$tpl->pparse('list_sets');
+$tpl->pparse('upload');
 
         
 ?>

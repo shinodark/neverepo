@@ -61,5 +61,4 @@ foreach ($res as $place => $level) {
 
 $tpl->pparse('playlist');
 
-echo "fin";
 ?>

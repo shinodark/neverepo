@@ -73,8 +73,5 @@ while ( $row = $res->fetch()) {
 
 $tpl->pparse('list_levels');
 
-echo "fin";
-
-
         
 ?>
