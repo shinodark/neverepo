@@ -24,9 +24,11 @@
  */
 
 /**
- * AutentificationHelper
+ * ForumUsersManager
+ * 
+ * Retrieve user informations from punBB database
  *
- * @author shino,htnever
+ * @author shino
  */
 define('FORUM_ROOT', "../" . ConfigManager::getProperty("auth_punroot"));
 require_once FORUM_ROOT . 'include/common.php';
@@ -35,6 +37,12 @@ class ForumUsersManager {
 
     static private $forum_users_info;
 
+    /**
+     * 
+     * @param int $id punBB id of the user
+     * @return array users info indexed by ID
+     * @throws NeverepoRessourceException
+     */
     static public function getUserInfo($id) {
 
         if (!self::$forum_users_info) {
@@ -47,6 +55,9 @@ class ForumUsersManager {
         return self::$forum_users_info[$id];
     }
 
+    /**
+     * Method getting query results and caching them in static property.
+     */
     static private function getUsersInfo() {
 
         if (!self::$forum_users_info) {

@@ -24,7 +24,7 @@
  */
 
 /**
- * Description of NeverepoModelException
+ * Description of NeverepoModelClass
  *
  * Abstract class used as parent for other model class.
  * Contains useful methods to access properties with getters / setters automagically
@@ -34,7 +34,6 @@
  *   $id -> getId() / setId()
  *   $other_example_for_fun -> getOtherExampleForFun() / setOtherExampleForFun()
  * 
- * Assume that class name is table name in database, in lowercase.
  * 
  * @author shino
  */

@@ -26,13 +26,7 @@
 /**
  * Description of NeverepoModelException
  *
- * Abstract class used as parent for other model class.
- * Contains useful methods to access properties with getters / setters automagically
- * from property name.
- * 
- * State that getters and setters fits name convention as follow :
- *   $id -> getId() / setId()
- *   $other_example_for_fun -> getOtherExampleForFun() / setOtherExampleForFun()
+ * Abstract class used as parent for other model class needing database.
  * 
  * Assume that class name is table name in database, in lowercase.
  * 

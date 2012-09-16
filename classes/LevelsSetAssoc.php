@@ -24,7 +24,7 @@
  */
 
 /**
- * Helper managin playlist (1 set > N levels)
+ * Helper managing playlist (1 set > N levels)
  *
  * @author shino
  */

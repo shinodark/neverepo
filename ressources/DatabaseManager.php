@@ -24,7 +24,6 @@
  */
 
 /**
- * Description of DatabaseManager
  *
  * @author shino
  */

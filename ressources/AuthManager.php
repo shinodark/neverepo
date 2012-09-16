@@ -24,7 +24,7 @@
  */
 
 /**
- * AutentificationHelper
+ * AuthManager : Autentication helper using punBB
  *
  * @author shino,htnever
  */
@@ -36,7 +36,7 @@ class AuthManager {
 
     static public function OpenSession() {
         global $forum_user;
-        session_name("__table15");
+        session_name("__neverepo");
         session_start();
         if (!$forum_user["is_guest"]) {
             $_SESSION['user_logged'] = true;
