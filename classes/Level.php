@@ -29,6 +29,12 @@
  * @author shino
  */
 
+if (!defined('IN_NEVEREPO')) {
+    exit;
+}
+
+require_once 'NeverepoModelClassDBO.php';
+
 class Level extends NeverepoModelClassDBO {
 
     private $author_id = -1;
@@ -39,46 +45,45 @@ class Level extends NeverepoModelClassDBO {
         parent::__construct();
     }
 
-    
     public function Insert() {
         if ($this->author_id == -1) {
-            throw new NeverepoModelException(_("Level::Insert() : Level is invalid."));
+            throw new NeverepoModelException("Level::Insert() : "._("Level is invalid."));
         }
-        
+
         $dbh = DatabaseManager::getDB();
         $query = 'INSERT into `level` (author_id,preview) VALUES (:author_id,:preview)';
         $sth = $dbh->prepare($query);
         $sth->bindParam(':author_id', $this->author_id, PDO::PARAM_INT);
         $sth->bindParam(':preview', $this->preview, PDO::PARAM_STR, 1024);
         $sth->execute();
-        
+
         $this->setId($dbh->lastInsertId());
     }
-    
+
     public function Update() {
         if (!$this->isValid()) {
-            throw new NeverepoModelException(_("Level::Delete() : Level is invalid."));
+            throw new NeverepoModelException("Level::Delete() : "._("Level is invalid."));
         }
-        
+
         $dbh = DatabaseManager::getDB();
         $query = 'UPDATE `level` SET author_id=:author_id,preview=:preview WHERE id=:id';
         $sth = $dbh->prepare($query);
         $sth->bindParam(':id', $this->id, PDO::PARAM_INT);
         $sth->bindParam(':author_id', $this->author_id, PDO::PARAM_INT);
-        $sth->bindParam(':preview', $this->preview, PDO::PARAM_STR, 1024);        
-        $sth->execute();        
+        $sth->bindParam(':preview', $this->preview, PDO::PARAM_STR, 1024);
+        $sth->execute();
     }
-    
+
     public function isValid() {
         return ($this->id != -1 && $this->author_id != -1);
     }
-    
+
     public function getId() {
         return $this->id;
     }
 
     public function setId($id) {
-        $this->id = (int)$id;
+        $this->id = (int) $id;
     }
 
     public function getAuthorId() {
@@ -86,7 +91,7 @@ class Level extends NeverepoModelClassDBO {
     }
 
     public function setAuthorId($author_id) {
-        $this->author_id = (int)$author_id;
+        $this->author_id = (int) $author_id;
     }
 
     public function getPreview() {
@@ -104,6 +109,7 @@ class Level extends NeverepoModelClassDBO {
     public function setTimestamp($timestamp) {
         $this->timestamp = $timestamp;
     }
+
 }
 
 ?>

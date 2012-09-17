@@ -28,6 +28,11 @@
  *
  * @author shino
  */
+
+if (!defined('IN_NEVEREPO')) {
+    exit;
+}
+
 class NeverepoModelException extends Exception {
 
 }

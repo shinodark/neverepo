@@ -29,6 +29,12 @@
  * @author shino,htnever
  */
 
+if (!defined('IN_NEVEREPO')) {
+    exit;
+}
+
+require_once 'ressources/ConfigManager.php';
+
 define('FORUM_ROOT', "../".ConfigManager::getProperty("auth_punroot"));
 require_once FORUM_ROOT.'include/common.php';
 

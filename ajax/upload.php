@@ -23,11 +23,12 @@
   # ***** END LICENSE BLOCK *****
  */
 
+define('IN_NEVEREPO', true);
 set_include_path("..");
 
-include_once "includes/classes_inc.php";
-include_once "includes/libs_inc.php";
-include_once "includes/ressources_inc.php";
+require_once "libs/filemanager.php";
+
+header('Content-Type: application/json');
 
 $file = $_FILES['file']['tmp_name'];
 
@@ -36,10 +37,16 @@ try {
     $f->Upload($_FILES, 'file', '../files', md5_file($file).'.sol', true);
 }
 catch (NeverepoLibException $e) {
-    return $e->getMessage();
+    echo json_encode(array(
+        "success" => false,
+        "error_msg" => $e->getMessage()
+    ));
+    exit;
 }
 
-echo "true";
+echo json_encode(array(
+  "success" => true,
+  "hash"    => $f->GetHash()
+  ));
 
-        
 ?>

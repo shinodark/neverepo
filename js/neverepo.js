@@ -24,13 +24,13 @@ function loadMain(page) {
     $('#main').load(page);
 }
 
-function uploadFile(fileId, progressHandlingFunction, completeHandler, errorHandler) {
+function uploadFile(fileId, progressHandlingFunction, successHandler, errorHandler) {
     var fd = new FormData();
     var file = $(fileId)[0].files[0];
     fd.append('file', file);
     
     $.ajax({
-        url: '../ajax/upload.php',  //server script to process data
+        url: '../ajax/upload.php',
         type: 'POST',
         xhr: function() {  // custom xhr
             myXhr = $.ajaxSettings.xhr();
@@ -39,14 +39,25 @@ function uploadFile(fileId, progressHandlingFunction, completeHandler, errorHand
             }
             return myXhr;
         },
-        //Ajax events
-        success: completeHandler,
+        success: successHandler,
         error: errorHandler,
-        // Form data
         data: fd,
         //Options to tell JQuery not to process data or worry about content-type
         cache: false,
         contentType: false,
         processData: false
     });
+}
+
+function getSolFileInfo(hash, successHandler, errorHandler) {
+    
+    var data = {};
+    data.hash = hash;
+    $.ajax({
+        url: '../ajax/solinfo.php',  //server script to process data
+        type: 'POST',
+        success: successHandler,
+        error: errorHandler,
+        data: data
+    });   
 }

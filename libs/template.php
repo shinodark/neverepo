@@ -27,6 +27,12 @@
  * and the template file formats are quite similar.
  *
  */
+if (!defined('IN_NEVEREPO')) {
+    exit;
+}
+
+require_once 'classes/NeverepoLibException.php';
+
 class Template {
 
     var $classname = "Template";

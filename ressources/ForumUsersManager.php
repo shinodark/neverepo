@@ -30,6 +30,11 @@
  *
  * @author shino
  */
+
+if (!defined('IN_NEVEREPO')) {
+    exit;
+}
+
 define('FORUM_ROOT', "../" . ConfigManager::getProperty("auth_punroot"));
 require_once FORUM_ROOT . 'include/common.php';
 

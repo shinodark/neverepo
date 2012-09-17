@@ -28,6 +28,14 @@
  *
  * @author shino
  */
+
+if (!defined('IN_NEVEREPO')) {
+    exit;
+}
+
+require_once 'ressources/DatabaseManager.php';
+require_once 'classes/Level.php';
+
 class LevelsSetAssoc {
 
     /**

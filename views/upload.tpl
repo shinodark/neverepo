@@ -5,6 +5,7 @@
 <progress></progress>
 <div class="message" id="errorMessage"></div>
 <div class="message" id="successMessage"></div>
+<div class="message" id="info"></div>
 
 
 <script type="text/javascript">
@@ -35,18 +36,38 @@
         $('#successMessage').html(msg);
         $('#successMessage').show("slow");
     }
+    
+    function showInfo(inf) {
+        var htm = '<table><tr><td>magic : '
+            + inf['magic']
+            + '</td><td> version : '
+            + inf['version']
+            + '</td></tr></table>';
+        $('#successMessage').html(htm);
+    }
 
-    function completeHandler(msg) {
-        if (msg == "true") {
-            success("{L_ERR_EXT}");
+    function uploadCompleteHandler(ret) {
+        if (ret.success == true) {
+            success("{L_SUCCESS}");
+            getSolFileInfo(ret.hash, solInfoHandler, showError);
         }
         else {
-            showError("msg");
+            showError(ret.error_msg);
+        }
+    }
+    
+    function solInfoHandler(ret) {
+        if (ret.success == true) {
+            success("{L_SUCCESS}");
+            showInfo(ret.solinfo);
+        }
+        else {
+            showError(ret.error_msg);
         }
     }
 
     $('#upload_button').click(function(){
-        uploadFile('#upload_file', progressHandler, completeHandler, showError);
+        uploadFile('#upload_file', progressHandler, uploadCompleteHandler, showError);
     });
     $('#uploadform').submit(function(){
         return false;

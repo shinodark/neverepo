@@ -28,6 +28,13 @@
  *
  * @author shino,htnever
  */
+
+if (!defined('IN_NEVEREPO')) {
+    exit;
+}
+
+require_once 'NeverepoModelClassDBO.php';
+
 class Set extends NeverepoModelClassDBO {
 
     private $name = "";
@@ -42,7 +49,7 @@ class Set extends NeverepoModelClassDBO {
     
     public function Insert() {
         if ($this->author_id == -1 || empty($this->name)) {
-            throw new NeverepoModelException("Set::Insert() : Level is invalid.");
+            throw new NeverepoModelException("Set::Insert() : "._("Set is invalid."));
         }
         
         $dbh = DatabaseManager::getDB();
@@ -60,7 +67,7 @@ class Set extends NeverepoModelClassDBO {
     
     public function Update() {
         if (!$this->isValid()) {
-            throw new NeverepoModelException(_("Set::Delete() : Set is invalid."));
+            throw new NeverepoModelException("Set::Delete() : "._("Set is invalid."));
         }
         
         $dbh = DatabaseManager::getDB();

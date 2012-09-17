@@ -29,6 +29,13 @@
  *
  * @author shino,htnever
  */
+
+if (!defined('IN_NEVEREPO')) {
+    exit;
+}
+
+require_once 'NeverepoModelClassDBO.php';
+
 class User extends NeverepoModelClass {
     
     private $id;

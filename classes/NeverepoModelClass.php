@@ -37,6 +37,11 @@
  * 
  * @author shino
  */
+
+if (!defined('IN_NEVEREPO')) {
+    exit;
+}
+
 abstract class NeverepoModelClass {
     protected $rc;
     

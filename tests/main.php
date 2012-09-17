@@ -23,11 +23,10 @@
   # ***** END LICENSE BLOCK *****
  */
 
+define('IN_NEVEREPO', true);
 set_include_path("..");
 
-include_once "includes/libs_inc.php";
-include_once "includes/classes_inc.php";
-include_once "includes/ressources_inc.php";
+require_once "libs/template.php";
 
 $tpl = new Template('../views/');
 

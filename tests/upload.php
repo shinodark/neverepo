@@ -23,16 +23,10 @@
   # ***** END LICENSE BLOCK *****
  */
 
+define('IN_NEVEREPO', true);
 set_include_path("..");
 
-include_once "includes/libs_inc.php";
-include_once "includes/classes_inc.php";
-include_once "includes/ressources_inc.php";
-
-
-$db = DatabaseManager::getDB();
-
-
+require_once "libs/template.php";
 
 $tpl = new Template('../views/');
 
@@ -43,7 +37,7 @@ $tpl->set_filenames(array(
 $tpl->assign_vars(array(
     "L_UPLOAD" => _("Upload"),
     "L_ERR_EXT" => _("Wrong file type : shold be a sol file"),
-    "L_ERR_EXT" => _("Upload successful"),
+    "L_SUCCESS" => _("Upload successful"),
 ));
 
 

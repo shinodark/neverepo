@@ -28,7 +28,12 @@
  * @author shino
  */
 
-include_once "ressources/ConfigManager.php";
+if (!defined('IN_NEVEREPO')) {
+    exit;
+}
+
+
+require_once "ressources/ConfigManager.php";
 
 class DatabaseManager {
 

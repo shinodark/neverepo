@@ -23,6 +23,7 @@
   # ***** END LICENSE BLOCK *****
  */
 
+define('IN_NEVEREPO', true);
 set_include_path("..");
 
 include_once "includes/ressources_inc.php";

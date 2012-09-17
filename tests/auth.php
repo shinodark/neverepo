@@ -23,9 +23,10 @@
   # ***** END LICENSE BLOCK *****
  */
 
+define('IN_NEVEREPO', true);
 set_include_path("..");
 
-include_once "includes/ressources_inc.php";
+require_once "ressources/AuthManager.php";
 
 if ($_SESSION['user_logged']) {
     echo "Bonjour " . $_SESSION['user_name'];

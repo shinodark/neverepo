@@ -28,6 +28,11 @@
  *
  * @author shino
  */
+
+if (!defined('IN_NEVEREPO')) {
+    exit;
+}
+
 class NeverepoRessourceException extends Exception {
 
 }

@@ -21,6 +21,12 @@
 #
 # ***** END LICENSE BLOCK *****
 
+if (!defined('IN_NEVEREPO')) {
+    exit;
+}
+
+require_once 'classes/NeverepoLibException.php';
+
 if (!defined('PATHMAX'))
     define('PATHMAX', 64);
 
@@ -136,7 +142,6 @@ class FileManager {
 
         if (!@rename($this->filename, $newname)) {
             throw new NeverepoLibException(_("Error Renaming file %s."));
-            return false;
         } else {
             return true;
         }
@@ -204,7 +209,6 @@ class FileManager {
             $msg = sprintf(_("Error opening file %s with attribute %s"), $this->filename, $att);
             throw new NeverepoLibException($msg);
         }
-        return true;
     }
 
     function Close() {

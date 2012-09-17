@@ -23,8 +23,30 @@
   # ***** END LICENSE BLOCK *****
  */
 
-include_once "ressources/ConfigManager.php";
-include_once "ressources/DatabaseManager.php";
-include_once "ressources/AuthManager.php";
-include_once "ressources/ForumUsersManager.php";
+define('IN_NEVEREPO', true);
+set_include_path("..");
+
+require_once "libs/solparser.php";
+
+header('Content-Type: application/json');
+
+$solinfo = array();
+
+try {
+    $sol = new SolParser('../files/'.$_POST['hash'].'.sol');
+    
+}
+catch (NeverepoLibException $e) {
+    echo json_encode(array(
+        "success" => false,
+        "error_msg" => $e->getMessage()
+    ));
+    exit;
+}
+
+echo json_encode(array(
+  "success"   => true,
+  "solinfo"   => $sol->getInfo()
+  ));
+
 ?>

@@ -32,6 +32,13 @@
  * 
  * @author shino
  */
+
+if (!defined('IN_NEVEREPO')) {
+    exit;
+}
+
+require_once 'NeverepoModelClass.php';
+
 abstract class NeverepoModelClassDBO extends NeverepoModelClass {
     
     protected $tableName;

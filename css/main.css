@@ -75,6 +75,7 @@ body {
 .message {
     border: 2px;
     display: none;
+    clear: both;
 }
 
 #successMessage {
