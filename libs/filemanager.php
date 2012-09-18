@@ -235,14 +235,19 @@ class FileManager {
         return @fseek($this->handle, $off);
     }
 
-    function Read() {
+    function Read($size = -1) {
         if (!isset($this->handle)) {
             $ret = $this->Open();
             if (!$ret)
                 return false;
         }
-        $data = @fread($this->handle, filesize($this->filename));
-        $this->Close();
+        if ($size == -1) {
+            $size = filesize($this->filename);
+        }
+        $data = @fread($this->handle, $size);
+        if (@feof($this->handle)) {
+            $this->Close();
+        }
         return $data;
     }
 
@@ -338,17 +343,15 @@ class FileManager {
         $c = chr(0);
         $str = " ";
         $i = 0;
-        $max = $length;
         do {
             $c = fgetc($this->handle);
             $str{$i} = $c;
             $i++;
-        } while ((ord($c) != 0) && ($max-- > 0));
+        } while ($i < $length);
 
-        if (ord($str{$i - 1}) != 0)
-            $str{$i - 1} = chr(0);
+        $str{$i-1} = chr(0);
 
-        return $str;
+        return (string)$str;
     }
 
     function WriteStringLength($str, $length) {

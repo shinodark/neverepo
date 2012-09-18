@@ -32,21 +32,22 @@ define('SOL_VERSION_1_5', 6);
 
 class SolParser {
 
-    private $solinfo = array();
+    private $solfileinfo = array();
+    private $textinfo = array();
     private $filemanager = null;
     
-    function __construct($solpath) {
+    public function __construct($solpath) {
         $this->filemanager = new FileManager();
         $this->filemanager->SetFileName($solpath);
         $this->filemanager->Open();
         
         $magic = $this->filemanager->ReadInt();
 	if ($magic != SOL_MAGIC) {
-            throw new NeverepoLibException("SolParser : " . _("Invalid sol file."));    
+            throw new NeverepoLibException("SolParser : " . _("Invalid sol file."));
         }
         $version = $this->filemanager->ReadInt();
 	if ($version != SOL_VERSION_1_5) {
-            throw new NeverepoLibException("SolParser : " . _("Invalid sol version."));    
+            throw new NeverepoLibException("SolParser : " . _("Invalid sol version."));
         }
         
         $this->solinfo['magic'] = $magic;
@@ -55,15 +56,56 @@ class SolParser {
         $this->Parse();
     }
     
-    function Parse() {
+    private function Parse() {
+        $inf = &$this->solfileinfo;
+        
+        $inf['ac']=$this->filemanager->ReadInt();
+        $inf['dc']=$this->filemanager->ReadInt();
+        $inf['mc']=$this->filemanager->ReadInt();
+        $inf['vc']=$this->filemanager->ReadInt();
+        $inf['ec']=$this->filemanager->ReadInt();
+        $inf['sc']=$this->filemanager->ReadInt();
+        $inf['tc']=$this->filemanager->ReadInt();
+        $inf['gc']=$this->filemanager->ReadInt();
+        $inf['lc']=$this->filemanager->ReadInt();
+        $inf['nc']=$this->filemanager->ReadInt();
+        $inf['pc']=$this->filemanager->ReadInt();
+        $inf['bc']=$this->filemanager->ReadInt();
+        $inf['hc']=$this->filemanager->ReadInt();
+        $inf['zc']=$this->filemanager->ReadInt();
+        $inf['jc']=$this->filemanager->ReadInt();
+        $inf['xc']=$this->filemanager->ReadInt();
+        $inf['rc']=$this->filemanager->ReadInt();
+        $inf['uc']=$this->filemanager->ReadInt();
+        $inf['wc']=$this->filemanager->ReadInt();
+        $inf['ic']=$this->filemanager->ReadInt();
+        
+        /* Read text array as buffer */
+        $text=$this->filemanager->ReadStringLength($inf['ac']);
+        
+        /* Read dict struct and create text indexed array $this->textinfo*/
+        $ai=0;
+        $aj=0;
+        for ($i=0; $i<$inf['dc']; $i++) {
+            $ai=$this->filemanager->ReadInt();
+            $aj=$this->filemanager->ReadInt();
+            if (($ai > (int)$inf['ac']) || ($aj > (int)$inf['ac'])) {
+                throw new NeverepoLibException("SolParser : " . _("Invalid dict."));    
+            }
+            $this->textinfo[$this->extractString($text, $ai)] = $this->extractString($text, $aj);
+        }
         
     }
     
-    function GetInfo() {
-        return $this->solinfo;
+    public function isPublic() {
+        return ($this->textinfo['bonus'] == "1") ? true : false;
+    }
+    
+    public function getMessage() {
+        return $this->textinfo['message'];
     }
 
-    function GetHash() {
+    public function GetHash() {
         if ($this->filemanager == null) {
             throw new NeverepoLibException("SolParser::GetHash() : " . _("Invalid file."));
         }
@@ -75,5 +117,20 @@ class SolParser {
             throw new NeverepoLibException("SolParser::GetFileManager() : " . _("Invalid file."));
         }
         return $this->filemanager;
+    }
+    
+    private function extractString(&$text, $offset, $length=1024) {
+        $str = " ";
+        $i = 0;
+        $j = (int)$offset;
+        do {
+            $c = $text{$j};
+            $str{$i} = $c;
+            $i++; $j++;
+        } while (($c != chr(0)) && ($i < $length));
+
+        $str{$i-1} = chr(0);
+            
+        return trim((string)$str);
     }
 }
