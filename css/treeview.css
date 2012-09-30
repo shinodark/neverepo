@@ -1,0 +1,94 @@
+/**********************************
+     LINKS CLASSES
+***********************************/
+
+a:link {
+     font-family:Tahoma;
+	 font-size:8pt;
+	 font-weight:normal;
+	 text-decoration:underline;
+}
+			
+a:visited {
+	 font-family:Tahoma;
+	 font-size:8pt;
+	 font-weight:normal;
+	 text-decoration:underline;
+}
+
+a:active {
+	 font-family:Tahoma;
+	 font-size:8pt;
+	 font-weight:normal;
+	 text-decoration:underline;
+}
+
+a:hover {
+	 font-family:Tahoma;
+	 font-size:8pt;
+	 font-weight:normal;
+	 text-decoration:none;
+}
+
+/**********************************
+     TREEVIEW CLASSES
+***********************************/
+
+.treeview {
+	 margin:0px;
+	 padding:0px;
+	 font-family:Tahoma;
+	 font-size:8pt;
+	 font-weight:normal;
+	 color:#000000
+}
+
+.treeviewFolderUl {
+	 margin-left: 20px;
+	 padding-left: 0px;
+}
+
+.treeviewFolderLi {
+	 list-style-type:none;
+	 vertical-align:middle;
+}
+
+.lnktxt {
+	 font-family:Tahoma;
+	 font-size:8pt;
+	 font-weight:normal;
+	 text-decoration:none;
+	 color:000000
+}
+
+.lnktxt a:link {
+	 font-family:Tahoma;
+	 font-size:8pt;
+	 font-weight:normal;
+	 text-decoration:none;
+	 color:000000
+}
+			
+.lnktxt a:visited {
+     font-family:Tahoma;
+	 font-size:8pt;
+	 font-weight:normal;
+	 text-decoration:none;
+	 color:000000
+}
+
+.lnktxt a:active	{
+	 font-family:Tahoma;
+	 font-size:8pt;
+	 font-weight:normal;
+	 text-decoration:none;
+	 color:000000
+}
+
+.lnktxt a:hover {
+	 font-family:Tahoma;
+	 font-size:8pt;
+	 font-weight:normal;
+	 text-decoration:none;
+	 color:000000
+}
